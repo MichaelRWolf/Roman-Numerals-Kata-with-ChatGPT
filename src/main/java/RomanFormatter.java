@@ -4,6 +4,8 @@ public class RomanFormatter {
     public String arabicToRoman(int arabicNumber) {
         if (arabicNumber >= 1000) {
             return "M" + arabicToRoman(arabicNumber - 1000);
+        } else if (arabicNumber >= 100) {
+            return "C" + arabicToRoman(arabicNumber - 100);
         }
         return ""; // Placeholder for handling other cases
     }
