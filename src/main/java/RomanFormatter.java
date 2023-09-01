@@ -1,11 +1,10 @@
 public class RomanFormatter {
 
-    // Arabic number to Roman numeral conversion method
+    // Arabic number to Roman numeral conversion method using recursion
     public String arabicToRoman(int arabicNumber) {
-        // Implement the conversion logic here for the specific case of 1000 mapping to "M"
-        if (arabicNumber == 1000) {
-            return "M";
+        if (arabicNumber >= 1000) {
+            return "M" + arabicToRoman(arabicNumber - 1000);
         }
-        return ""; // Placeholder, replace with actual code for other cases
+        return ""; // Placeholder for handling other cases
     }
 }
