@@ -27,5 +27,13 @@ public class RomanFormatterTest {
         assertEquals("C", result);
     }
 
+    // Test method for Arabic number 10 mapping to "X"
+    @Test
+    public void testArabicToRoman_ten() {
+        RomanFormatter formatter = new RomanFormatter();
+        String result = formatter.arabicToRoman(10);
+        assertEquals("X", result);
+    }
+
     // Add more test methods here for additional cases
 }
