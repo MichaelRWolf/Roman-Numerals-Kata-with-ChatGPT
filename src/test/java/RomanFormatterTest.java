@@ -43,5 +43,13 @@ public class RomanFormatterTest {
         assertEquals("V", result);
     }
 
+    // Test method for Arabic number 50 mapping to "L"
+    @Test
+    public void testArabicToRoman_fifty() {
+        RomanFormatter formatter = new RomanFormatter();
+        String result = formatter.arabicToRoman(50);
+        assertEquals("L", result);
+    }
+
     // Add more test methods here for additional cases
 }
