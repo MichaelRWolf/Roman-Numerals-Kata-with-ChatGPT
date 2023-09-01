@@ -3,12 +3,12 @@ import static org.junit.Assert.assertEquals;
 
 public class RomanFormatterTest {
 
-    // Test method for Roman numeral to Arabic number conversion
+    // Test method for Arabic number 1000 mapping to "M"
     @Test
-    public void testRomanToArabic_basic() {
+    public void testArabicToRoman_thousand() {
         RomanFormatter formatter = new RomanFormatter();
-        int result = formatter.romanToArabic("I");
-        assertEquals(1, result);
+        String result = formatter.arabicToRoman(1000);
+        assertEquals("M", result);
     }
 
     // Add more test methods here for additional cases
