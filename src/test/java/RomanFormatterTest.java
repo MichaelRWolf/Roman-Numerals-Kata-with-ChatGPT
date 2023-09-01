@@ -35,5 +35,13 @@ public class RomanFormatterTest {
         assertEquals("X", result);
     }
 
+    // Test method for Arabic number 5 mapping to "V"
+    @Test
+    public void testArabicToRoman_five() {
+        RomanFormatter formatter = new RomanFormatter();
+        String result = formatter.arabicToRoman(5);
+        assertEquals("V", result);
+    }
+
     // Add more test methods here for additional cases
 }
