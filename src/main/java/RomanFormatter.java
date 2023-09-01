@@ -8,6 +8,8 @@ public class RomanFormatter {
             return "D" + arabicToRoman(arabicNumber - 500);
         } else if (arabicNumber >= 100) {
             return "C" + arabicToRoman(arabicNumber - 100);
+        } else if (arabicNumber >= 50) {
+            return "L" + arabicToRoman(arabicNumber - 50);
         } else if (arabicNumber >= 10) {
             return "X" + arabicToRoman(arabicNumber - 10);
         } else if (arabicNumber >= 5) {
