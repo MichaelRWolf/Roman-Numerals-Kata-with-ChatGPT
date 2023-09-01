@@ -19,5 +19,13 @@ public class RomanFormatterTest {
         assertEquals("MM", result);
     }
 
+    // Test method for Arabic number 100 mapping to "C"
+    @Test
+    public void testArabicToRoman_hundred() {
+        RomanFormatter formatter = new RomanFormatter();
+        String result = formatter.arabicToRoman(100);
+        assertEquals("C", result);
+    }
+
     // Add more test methods here for additional cases
 }
