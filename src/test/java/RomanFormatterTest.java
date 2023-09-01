@@ -11,5 +11,13 @@ public class RomanFormatterTest {
         assertEquals("M", result);
     }
 
+    // Test method for Arabic number 2000 mapping to "MM"
+    @Test
+    public void testArabicToRoman_two_thousand() {
+        RomanFormatter formatter = new RomanFormatter();
+        String result = formatter.arabicToRoman(2000);
+        assertEquals("MM", result);
+    }
+
     // Add more test methods here for additional cases
 }
