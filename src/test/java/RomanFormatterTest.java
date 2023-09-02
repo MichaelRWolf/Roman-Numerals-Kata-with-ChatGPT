@@ -1,5 +1,6 @@
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class RomanFormatterTest {
 
@@ -50,6 +51,20 @@ public class RomanFormatterTest {
         String result = formatter.arabicToRoman(50);
         assertEquals("L", result);
     }
+
+    @Test
+    public void testOutOfBoundsInput() {
+        RomanFormatter formatter = new RomanFormatter();
+        int outOfBoundsValue = 4000;
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> formatter.arabicToRoman(outOfBoundsValue)
+        );
+
+        String expectedMessage = "Input value is out of bounds. Expected a value between 1 and 3999, but received " + outOfBoundsValue;
+        assertEquals(expectedMessage, exception.getMessage());
+    }
+
 
     // Add more test methods here for additional cases
 }
