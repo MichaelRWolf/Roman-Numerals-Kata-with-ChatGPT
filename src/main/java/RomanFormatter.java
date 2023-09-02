@@ -3,10 +3,9 @@ import java.util.Map;
 
 public class RomanFormatter {
 
-    private static final int MIN_ROMAN_VALUE = 0;
-    private static final int MAX_ROMAN_VALUE = 3999;
-
     private static final Map<Integer, String> arabicToRomanMap = new LinkedHashMap<>();
+    private static final int MIN_ROMAN_VALUE = 1;
+    private static final int MAX_ROMAN_VALUE = 3999;
 
     static {
         arabicToRomanMap.put(1000, "M");
@@ -25,25 +24,26 @@ public class RomanFormatter {
     }
 
     public String arabicToRoman(int arabicNumber) {
-        if (arabicNumber < MIN_ROMAN_VALUE || arabicNumber > MAX_ROMAN_VALUE) {
-            throw new IllegalArgumentException("Input value out of bounds: " + arabicNumber);
+        if (isBeyondBounds(arabicNumber)) {
+            throw new IllegalArgumentException(
+                    "Input value is out of bounds. Expected a value between " + MIN_ROMAN_VALUE +
+                            " and " + MAX_ROMAN_VALUE + ", but received " + arabicNumber
+            );
         }
-
         Map.Entry<Integer, String> entry = arabicToRomanMap.entrySet().iterator().next();
         int arabic = entry.getKey();
         String roman = entry.getValue();
-
         if (arabicNumber == arabic) {
-            return roman; // No need to recurse, we've found a match
-        } else if (arabicNumber < arabic) {
-            arabicToRomanMap.remove(arabic); // Remove the top element
-            return arabicToRoman(arabicNumber); // Recurse on the same argument
+            return roman;
+        } else if (arabicNumber > arabic) {
+            return roman + arabicToRoman(arabicNumber - arabic);
         } else {
-            return roman + arabicToRoman(arabicNumber - arabic); // Recurse with a decremented arabicNumber
+            arabicToRomanMap.remove(arabic);
+            return arabicToRoman(arabicNumber);
         }
     }
 
-    private boolean isWithinBounds(int number) {
-        return number >= MIN_ROMAN_VALUE && number <= MAX_ROMAN_VALUE;
+    private boolean isBeyondBounds(int arabicNumber) {
+        return arabicNumber < MIN_ROMAN_VALUE || arabicNumber > MAX_ROMAN_VALUE;
     }
 }
