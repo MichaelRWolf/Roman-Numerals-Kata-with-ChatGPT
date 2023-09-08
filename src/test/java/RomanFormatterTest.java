@@ -73,4 +73,23 @@ public class RomanFormatterTest {
         assertEquals("DCCCXC", formatter.arabicToRoman(890));
         assertEquals("CM", formatter.arabicToRoman(900));
     }
+
+    // Test method for large Arabic numbers
+    @Test
+    public void testLargeNumbers() {
+        RomanFormatter formatter = new RomanFormatter();
+        assertEquals("I", formatter.arabicToRoman(1));
+        assertEquals("IV", formatter.arabicToRoman(4));
+        assertEquals("IX", formatter.arabicToRoman(9));
+        assertEquals("XL", formatter.arabicToRoman(40));
+        assertEquals("XC", formatter.arabicToRoman(90));
+        assertEquals("CD", formatter.arabicToRoman(400));
+        assertEquals("CM", formatter.arabicToRoman(900));
+        assertEquals("M", formatter.arabicToRoman(1000));
+        assertEquals("MCMXC", formatter.arabicToRoman(1990));
+        assertEquals("MM", formatter.arabicToRoman(2000));
+        assertEquals("MMCMXCIX", formatter.arabicToRoman(3999));
+    }
+
+
 }
