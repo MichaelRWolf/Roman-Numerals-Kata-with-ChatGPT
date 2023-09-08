@@ -1,49 +1,56 @@
-import java.util.LinkedHashMap;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Map;
+import java.util.AbstractMap;
 
 public class RomanFormatter {
 
-    private static final Map<Integer, String> arabicToRomanMap = new LinkedHashMap<>();
-    private static final int MIN_ROMAN_VALUE = 1;
-    private static final int MAX_ROMAN_VALUE = 3999;
+    private static final Deque<Map.Entry<Integer, String>> arabicToRomanPairs = createArabicToRomanPairs();
 
-    static {
-        arabicToRomanMap.put(1000, "M");
-        arabicToRomanMap.put(900, "CM");
-        arabicToRomanMap.put(500, "D");
-        arabicToRomanMap.put(400, "CD");
-        arabicToRomanMap.put(100, "C");
-        arabicToRomanMap.put(90, "XC");
-        arabicToRomanMap.put(50, "L");
-        arabicToRomanMap.put(40, "XL");
-        arabicToRomanMap.put(10, "X");
-        arabicToRomanMap.put(9, "IX");
-        arabicToRomanMap.put(5, "V");
-        arabicToRomanMap.put(4, "IV");
-        arabicToRomanMap.put(1, "I");
+    private static Deque<Map.Entry<Integer, String>> createArabicToRomanPairs() {
+        Deque<Map.Entry<Integer, String>> pairs = new ArrayDeque<>();
+        pairs.addLast(new AbstractMap.SimpleEntry<>(1000, "M"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(900, "CM"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(500, "D"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(400, "CD"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(100, "C"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(90, "XC"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(50, "L"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(40, "XL"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(10, "X"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(9, "IX"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(5, "V"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(4, "IV"));
+        pairs.addLast(new AbstractMap.SimpleEntry<>(1, "I"));
+        return pairs;
     }
 
     public String arabicToRoman(int arabicNumber) {
         if (isBeyondBounds(arabicNumber)) {
-            throw new IllegalArgumentException(
-                    "Input value is out of bounds. Expected a value between " + MIN_ROMAN_VALUE +
-                            " and " + MAX_ROMAN_VALUE + ", but received " + arabicNumber
-            );
+            throw new IllegalArgumentException("Value is out of bounds. Must be between 1 and 3999.");
         }
-        Map.Entry<Integer, String> entry = arabicToRomanMap.entrySet().iterator().next();
-        int arabic = entry.getKey();
-        String roman = entry.getValue();
-        if (arabicNumber == arabic) {
-            return roman;
-        } else if (arabicNumber > arabic) {
-            return roman + arabicToRoman(arabicNumber - arabic);
+
+        return arabicToRomanRecursive(arabicNumber, new ArrayDeque<>(arabicToRomanPairs));
+    }
+
+    private String arabicToRomanRecursive(int arabicNumber, Deque<Map.Entry<Integer, String>> pairs) {
+        if (arabicNumber == 0) {
+            return "";
+        }
+
+        Map.Entry<Integer, String> pair = pairs.peek();
+
+        if (arabicNumber == pair.getKey()) {
+            return pair.getValue();
+        } else if (arabicNumber > pair.getKey()) {
+            return pair.getValue() + arabicToRomanRecursive(arabicNumber - pair.getKey(), pairs);
         } else {
-            arabicToRomanMap.remove(arabic);
-            return arabicToRoman(arabicNumber);
+            pairs.pop();
+            return arabicToRomanRecursive(arabicNumber, pairs);
         }
     }
 
     private boolean isBeyondBounds(int arabicNumber) {
-        return arabicNumber < MIN_ROMAN_VALUE || arabicNumber > MAX_ROMAN_VALUE;
+        return arabicNumber < 1 || arabicNumber > 3999;
     }
 }
