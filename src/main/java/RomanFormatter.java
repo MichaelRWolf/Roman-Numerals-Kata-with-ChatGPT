@@ -1,53 +1,47 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
-import java.util.AbstractMap;
 
 public class RomanFormatter {
-
     private static final Deque<Map.Entry<Integer, String>> arabicToRomanPairs = createArabicToRomanPairs();
 
     private static Deque<Map.Entry<Integer, String>> createArabicToRomanPairs() {
+
+        // Initialize a deque with pairs of Arabic numerals and their corresponding Roman numerals
         Deque<Map.Entry<Integer, String>> pairs = new ArrayDeque<>();
-        pairs.addLast(new AbstractMap.SimpleEntry<>(1000, "M"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(900, "CM"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(500, "D"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(400, "CD"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(100, "C"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(90, "XC"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(50, "L"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(40, "XL"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(10, "X"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(9, "IX"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(5, "V"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(4, "IV"));
-        pairs.addLast(new AbstractMap.SimpleEntry<>(1, "I"));
+        pairs.add(Map.entry(1000, "M"));
+        pairs.add(Map.entry(900, "CM"));
+        pairs.add(Map.entry(500, "D"));
+        pairs.add(Map.entry(400, "CD"));
+        pairs.add(Map.entry(100, "C"));
+        pairs.add(Map.entry(90, "XC"));
+        pairs.add(Map.entry(50, "L"));
+        pairs.add(Map.entry(40, "XL"));
+        pairs.add(Map.entry(10, "X"));
+        pairs.add(Map.entry(9, "IX"));
+        pairs.add(Map.entry(5, "V"));
+        pairs.add(Map.entry(4, "IV"));
+        pairs.add(Map.entry(1, "I"));
         return pairs;
     }
 
     public String arabicToRoman(int arabicNumber) {
         if (isBeyondBounds(arabicNumber)) {
-            throw new IllegalArgumentException("Value is out of bounds. Must be between 1 and 3999.");
+            throw new IllegalArgumentException("Input is out of bounds. Must be between 1 and 3999.");
         }
-
-        return arabicToRomanRecursive(arabicNumber, new ArrayDeque<>(arabicToRomanPairs));
-    }
-
-    private String arabicToRomanRecursive(int arabicNumber, Deque<Map.Entry<Integer, String>> pairs) {
-        if (arabicNumber == 0) {
-            return "";
+        StringBuilder result = new StringBuilder();
+        while (arabicNumber > 0) {
+            Map.Entry<Integer, String> pair = arabicToRomanPairs.peek();
+            int arabic = pair.getKey();
+            String roman = pair.getValue();
+            if (arabicNumber >= arabic) {
+                result.append(roman);
+                arabicNumber -= arabic;
+            } else {
+                arabicToRomanPairs.pop();
+            }
         }
-
-        Map.Entry<Integer, String> pair = pairs.peek();
-
-        if (arabicNumber == pair.getKey()) {
-            return pair.getValue();
-        } else if (arabicNumber > pair.getKey()) {
-            return pair.getValue() + arabicToRomanRecursive(arabicNumber - pair.getKey(), pairs);
-        } else {
-            pairs.pop();
-            return arabicToRomanRecursive(arabicNumber, pairs);
-        }
+        return result.toString();
     }
 
     private boolean isBeyondBounds(int arabicNumber) {
