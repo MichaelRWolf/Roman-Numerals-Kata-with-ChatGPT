@@ -59,4 +59,18 @@ public class RomanFormatterTest {
         RomanFormatter formatter = new RomanFormatter();
         assertThrows(IllegalArgumentException.class, () -> formatter.arabicToRoman(4000));
     }
+
+    @Test
+    public void testInterestingValues() {
+        RomanFormatter formatter = new RomanFormatter();
+        assertEquals("MCMXC", formatter.arabicToRoman(1990));
+        assertEquals("MMXIV", formatter.arabicToRoman(2014));
+        assertEquals("MMCMXCIV", formatter.arabicToRoman(2994));
+        assertEquals("XLII", formatter.arabicToRoman(42));
+        assertEquals("CCCLXXXVIII", formatter.arabicToRoman(388));
+        assertEquals("DCLXVI", formatter.arabicToRoman(666));
+        assertEquals("CMXCIX", formatter.arabicToRoman(999));
+        assertEquals("DCCCXC", formatter.arabicToRoman(890));
+        assertEquals("CM", formatter.arabicToRoman(900));
+    }
 }
