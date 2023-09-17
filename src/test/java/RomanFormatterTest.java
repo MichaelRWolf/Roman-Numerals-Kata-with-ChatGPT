@@ -88,7 +88,7 @@ public class RomanFormatterTest {
         assertEquals("M", formatter.arabicToRoman(1000));
         assertEquals("MCMXC", formatter.arabicToRoman(1990));
         assertEquals("MM", formatter.arabicToRoman(2000));
-        assertEquals("MMCMXCIX", formatter.arabicToRoman(3999));
+        assertEquals("MMMCMXCIX", formatter.arabicToRoman(3999));
     }
 
 
